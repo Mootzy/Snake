@@ -23,7 +23,7 @@ public class Panel extends JPanel implements ActionListener {
     final int[] x = new int[GAME_UNITS];
     final int[] y = new int[GAME_UNITS];
 
-    int bodyParts = 6;
+    int bodyParts = 1;
     int applesEaten = 0;
     int appleXLocation = 0;
     int appleYLocation = 0;
@@ -34,7 +34,10 @@ public class Panel extends JPanel implements ActionListener {
     Random random;
     Timer timer;
 
-
+    /**
+     * Create panel to add to frame.
+     * Hold all important data to display
+     */
     Panel(){
         random = new Random();
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_WIDTH));
@@ -42,6 +45,7 @@ public class Panel extends JPanel implements ActionListener {
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
         startGame();
+
     }
 
     public void startGame(){
@@ -56,7 +60,8 @@ public class Panel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        drawGrid(g);
+        //uncomment to display overlaying grid of panel
+        //drawGrid(g);
         draw(g);
     }
 
@@ -69,7 +74,7 @@ public class Panel extends JPanel implements ActionListener {
      * in relation to unit size i.e apple or snake head...
      * @param g
      */
-    public void drawGrid(Graphics g){
+/*    public void drawGrid(Graphics g){
 
         for ( int i = 0; i < PANEL_HEIGHT/UNIT_SIZE;i++){
             g.setColor(Color.white);
@@ -77,7 +82,7 @@ public class Panel extends JPanel implements ActionListener {
             g.drawLine(0, i*UNIT_SIZE, PANEL_WIDTH,i*UNIT_SIZE);
         }
 
-    }
+    }*/
 
     /**
      * Method to draw head and body of snake.
@@ -158,6 +163,11 @@ public class Panel extends JPanel implements ActionListener {
 
     public void checkApple(){
 
+        if(x[0] == appleXLocation && y[0] == appleYLocation){
+            bodyParts++;
+            applesEaten ++;
+            newApple();
+        }
     }
 
     /**
@@ -200,8 +210,8 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public void gameOver(Graphics g){
-
     }
+
    //SubClass used for global keyAdapter
     public class MyKeyAdapter extends KeyAdapter{
 
