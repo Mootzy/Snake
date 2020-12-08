@@ -19,29 +19,6 @@ public class Alert extends JFrame implements ActionListener  {
 
     Alert (){
 
-        /*score.setText(String.valueOf(playerScore));
-        score.setFont(new Font(null, Font.BOLD, 50));
-        score.setVisible(true);
-        score.setLocation(alert.getLocation());
-        score.setBounds(190,200,200,50);
-        score.setBackground(new Color(this.getBackground().getRGB(), true));
-        score.setFont(new Font(null, Font.CENTER_BASELINE,25));
-
-        //game over text area constraints
-        gameOver.setVisible(true);
-        gameOver.setLocation(alert.getLocation());
-        gameOver.setText("GAME OVER");
-        gameOver.setBounds(120,100,200,50);
-        gameOver.setBackground(new Color(alert.getBackground().getRGB(), true));
-        gameOver.setFont(new Font(null, Font.CENTER_BASELINE,25));
-
-        //Create reset button for game
-        reset.setVisible(true);
-        reset.setText("reset");
-        reset.setBounds(120,500,75,25);
-        reset.setBackground(new Color(alert.getBackground().getRGB(), true));
-        reset.addActionListener(this::resetButtonAction);*/
-
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         this.setLocationRelativeTo(null);

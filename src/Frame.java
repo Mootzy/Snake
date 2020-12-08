@@ -4,19 +4,29 @@ public class Frame extends JFrame {
 
 
 Frame(){
-
-    this.add(new GamePanel());
-    this.setTitle("Tyler's Snake Game");
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setResizable(false);
-    this.pack();
-    this.setVisible(true);
-    this.setLocationRelativeTo(null);
+    startGamePanel();
+    addContent();
 
     }
+     public void startGamePanel(){
+        this.add(new GamePanel());
+        this.requestFocus();
+
+     }
 
 
+    public void mainMenuGamePanel(){
+        this.add(new MainMenuFrame());
+     }
 
+    public void addContent(){
+
+        this.setLocationRelativeTo(null);this.setTitle("Tyler's Snake Game");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.pack();
+        this.setVisible(true);
+    }
 
 
 

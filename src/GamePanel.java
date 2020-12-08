@@ -67,11 +67,7 @@ public class GamePanel extends JPanel implements ActionListener {
     GamePanel(){
 
         random = new Random();
-        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        this.setBackground(Color.BLACK);
-        this.setFocusable(true);
-        this.addKeyListener(new MyKeyAdapter());
-        //this.add(displayScore());
+        buildPanel();
         startGame();
 
     }
@@ -341,12 +337,14 @@ public class GamePanel extends JPanel implements ActionListener {
     public void resetButtonAction(ActionEvent e) {
         if(e.getSource() == reset){
             new Frame();
+            alert.dispose();
         }
     }
 
     public void quitButtonAction(ActionEvent e){
         if (e.getSource() == quit){
             exitGame();
+
         }
     }
 
@@ -401,8 +399,16 @@ public class GamePanel extends JPanel implements ActionListener {
         alert.add(quit);
     }
 
-
     public void exitGame(){
         System.exit(-1);
+    }
+
+    public void buildPanel(){
+        this.requestFocus();
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        this.setBackground(Color.BLACK);
+        this.setFocusable(true);
+        this.addKeyListener(new MyKeyAdapter());
+
     }
 }
