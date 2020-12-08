@@ -4,7 +4,8 @@ public class Frame extends JFrame {
 
 
 Frame(){
-    this.add(new Panel());
+
+    this.add(new GamePanel());
     this.setTitle("Tyler's Snake Game");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(false);
