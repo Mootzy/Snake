@@ -95,6 +95,9 @@ public class GamePanel extends JPanel implements ActionListener {
         //drawGrid(g);
         draw(g);
         drawPlayerScore(g, playerScore.toString());
+        if(running == false){
+            gameOverPaint(g);
+        }
     }
 
     /**
@@ -247,6 +250,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void gameOver(){
         timer.stop();
         createAlertDialog();
+
     }
 
     public void createAlertDialog(){
@@ -347,14 +351,28 @@ public class GamePanel extends JPanel implements ActionListener {
 
         }
     }
+    public void gameOverPaint(Graphics g) {
+        //Score
+        g.setColor(Color.red);
+        g.setFont( new Font("Ink Free",Font.BOLD, 40));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("Score: "+ applesEaten * 100, (PANEL_WIDTH - metrics1.stringWidth("Score: "+ applesEaten * 100))/2, g.getFont().getSize());
+        //Game Over text
+        g.setColor(Color.red);
+        g.setFont( new Font("Ink Free",Font.BOLD, 75));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Game Over", (PANEL_WIDTH - metrics2.stringWidth("Game Over"))/2, PANEL_HEIGHT/2);
+    }
+
+
 
     public void buildAlertContent(){
         //Score tracker constraints
-        score.setText(String.valueOf(playerScore));
+        score.setText("Score: "+String.valueOf(playerScore));
         score.setFont(new Font(null, Font.BOLD, 50));
         score.setVisible(true);
         score.setLocation(alert.getLocation());
-        score.setBounds(160,200,200,50);
+        score.setBounds(135,200,200,50);
         score.setBackground(new Color(alert.getBackground().getRGB(), true));
         score.setFont(new Font(null, Font.CENTER_BASELINE,25));
 
