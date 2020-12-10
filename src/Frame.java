@@ -3,18 +3,19 @@ import javax.swing.*;
 public class Frame extends JFrame {
 
 
-Frame(){
-    startGamePanel();
-    addContent();
+    Frame(){
+
+        startGamePanel();
+        addContent();
+
     }
+
+    /**
+     *
+     */
      public void startGamePanel(){
         this.add(new GamePanel());
         this.requestFocus();
-
-     }
-
-    public void mainMenuGamePanel(){
-        this.add(new MainMenuFrame());
      }
 
     public void addContent(){
@@ -24,6 +25,7 @@ Frame(){
         this.setResizable(false);
         this.pack();
         this.setVisible(true);
+
     }
 
 

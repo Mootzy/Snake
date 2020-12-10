@@ -10,55 +10,121 @@ import java.util.*;
 import javax.swing.Timer;
 
 /**
+ * The type Game panel.
+ *
  * @author Tyler Wallace
  */
 public class GamePanel extends JPanel implements ActionListener {
 
-    //variables for panel dimensions
+    /**
+     * The constant PANEL_WIDTH.
+     */
+//variables for panel dimensions
     static final int PANEL_WIDTH = 600;
+    /**
+     * The Panel height.
+     */
     static final int PANEL_HEIGHT = 600;
 
-    //size of apple, snake, etc.
+    /**
+     * The constant UNIT_SIZE.
+     */
+//size of apple, snake, etc.
     static final int UNIT_SIZE = 25;
 
-    //grid units of panel
+    /**
+     * The constant GAME_UNITS.
+     */
+//grid units of panel
     static final int GAME_UNITS = (PANEL_WIDTH * PANEL_HEIGHT) / UNIT_SIZE;
 
-    //speed that the game is running at.. would like to make this variable and progressively get faster as game progresses.
+    /**
+     * The constant DELAY i.e speed at which snake runs
+     */
+//speed that the game is running at.. would like to make this variable and progressively get faster as game progresses.
     static final int DELAY = 75;
 
-    //
+    /**
+     * The X and Y coordinates of the board/frame
+     */
+//
     final int[] x = new int[GAME_UNITS];
+    /**
+     * The Y.
+     */
     final int[] y = new int[GAME_UNITS];
 
+    /**
+     * The Body parts.
+     */
     int bodyParts = 1;
+    /**
+     * The Apples eaten.
+     */
     int applesEaten = 0;
+    /**
+     * The Apple x location.
+     */
     int appleXLocation = 0;
+    /**
+     * The Apple y location.
+     */
     int appleYLocation = 0;
 
+    /**
+     * The Player score.
+     */
     public Integer playerScore = applesEaten * 100;
 
-    //Reflects users input from keyboard and direction of snake head
+    /**
+     * Reflects users input from keyboard and direction of snake head
+     */
+
     char direction = 'R';
 
-    //Decides whether game is stopped or going.
+    /**
+     * Decides whether game is stopped or going.
+     */
     boolean running = false;
     boolean paused = false;
 
-    //used to generate apple randomly
+    /**
+     * used to generate apple randomly
+     */
     Random random;
 
-    //used to adjust game speed of snakes movement.
+    /**
+     * The Timer.
+     */
+//used to adjust game speed of snakes movement.
     Timer timer;
+    /**
+     * The Alert.
+     */
     JFrame alert;
 
+    /**
+     * The Score tracker.
+     */
     JTextArea scoreTracker;
 
+    /**
+     * The Game over.
+     */
     JTextArea gameOver = new JTextArea("GAME OVER");
-    //needed to use String.valueOf as opposed to typeCast to properly get playerScore
+    /**
+     * The Score.
+     */
+//needed to use String.valueOf as opposed to typeCast to properly get playerScore
     JTextArea score = new JTextArea();
 
+    /**
+     * The Reset.
+     */
     JButton reset = new JButton("reset");
+    /**
+     * The Quit.
+     */
     JButton quit = new JButton("quit");
 
     /**
@@ -103,7 +169,8 @@ public class GamePanel extends JPanel implements ActionListener {
     /**
      * Method to illustrate grid like nature of the board
      * in relation to unit size i.e apple or snake head...
-     * @param g
+     *
+     * @param g the g
      */
     public void drawGrid(Graphics g){
 
@@ -119,7 +186,8 @@ public class GamePanel extends JPanel implements ActionListener {
      * Method to draw head and body of snake.
      * Randomly places apple.
      * Paints Snake
-     * @param g
+     *
+     * @param g the g
      */
     public void draw(Graphics g) {
 
@@ -127,7 +195,7 @@ public class GamePanel extends JPanel implements ActionListener {
             //Apple color, coordinates and size.
             g.setColor(Color.RED);
             g.fillRect(appleXLocation, appleYLocation, UNIT_SIZE, UNIT_SIZE);
-
+            playerScorePaint(g);
             //loop to keep track and add to snake array this maintains the head color/spawn/size
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
@@ -197,6 +265,9 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Check apple.
+     */
     public void checkApple(){
 
         if(x[0] == appleXLocation && y[0] == appleYLocation){
@@ -251,12 +322,18 @@ public class GamePanel extends JPanel implements ActionListener {
        
     }
 
+    /**
+     * Game over.
+     */
     public void gameOver(){
         timer.stop();
         createAlertDialog();
         running = false;
     }
 
+    /**
+     * Create alert dialog.
+     */
     public void createAlertDialog(){
 
         //parent container
@@ -271,6 +348,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Display score j text area.
+     *
+     * @return the j text area
+     */
     public JTextArea displayScore(){
         scoreTracker = new JTextArea(String.valueOf(playerScore));
         scoreTracker.update(scoreTracker.getGraphics());
@@ -280,10 +362,21 @@ public class GamePanel extends JPanel implements ActionListener {
         return scoreTracker;
     }
 
+    /**
+     * Get player score int.
+     *
+     * @return the int
+     */
     public int getPlayerScore(){
         return playerScore;
     }
 
+    /**
+     * Draw player score.
+     *
+     * @param g                 the graphics
+     * @param playerScoreString the player score string
+     */
     public void drawPlayerScore(Graphics g, String playerScoreString){
         g.setFont(new Font(null, Font.BOLD,25));
         g.setColor(Color.white);
@@ -291,7 +384,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    //SubClass used for global keyAdapter
+    /**
+     * The type My key adapter.
+     */
+//SubClass used for global keyAdapter
     public class MyKeyAdapter extends KeyAdapter{
 
         @SuppressWarnings("AlibabaSwitchStatement")
@@ -367,14 +463,28 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
-public void resumeGame(){
+
+    /**
+     * Resume game.
+     * resumes timer
+     */
+    public void resumeGame(){
     paused = false;
     timer.start();
 }
+
+    /**
+     * Pause game.
+     * stops timer
+     */
     public void pauseGame(){
     timer.stop();
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -386,13 +496,26 @@ public void resumeGame(){
         repaint();
     }
 
+    /**
+     * Reset button action.
+     *
+     * @param e the event(click)
+     */
     public void resetButtonAction(ActionEvent e) {
+        //COME BACK TO THIS TO USE FOR NEVERMORE TO CLOSE THAT JPANEL AS WELL NICE JOB DUDE HELL YESSSSSSSSS
         if(e.getSource() == reset){
+            this.setVisible(false);
+            this.getRootPane().getTopLevelAncestor().setVisible(false);
             new Frame();
             alert.dispose();
         }
     }
 
+    /**
+     * Quit button action.
+     * closes game
+     * @param e the e
+     */
     public void quitButtonAction(ActionEvent e){
         if (e.getSource() == quit){
             exitGame();
@@ -400,6 +523,11 @@ public void resumeGame(){
         }
     }
 
+    /**
+     * Game over paint.
+     * paints red game over and shows player score
+     * @param g the g
+     */
     public void gameOverPaint(Graphics g) {
         //Score
         g.setColor(Color.red);
@@ -413,6 +541,18 @@ public void resumeGame(){
         g.drawString("Game Over", (PANEL_WIDTH - metrics2.stringWidth("Game Over"))/2, PANEL_HEIGHT/2);
     }
 
+    public void playerScorePaint(Graphics g){
+        g.setColor(Color.white);
+        g.setFont( new Font("Ink Free",Font.BOLD, 40));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("Score: "+ applesEaten * 100, (PANEL_WIDTH - metrics1.stringWidth("Score: "+ applesEaten * 100))/2, g.getFont().getSize());
+
+    }
+
+    /**
+     * Build alert content.
+     * set all dimensions bounds colors etc
+     */
     public void buildAlertContent(){
         //Score tracker constraints
         score.setText("Score: "+String.valueOf(playerScore));
@@ -448,6 +588,10 @@ public void resumeGame(){
         quit.setLayout(null);
     }
 
+    /**
+     * Add alert content.
+     * add all previously built content to the jpanel
+     */
     public void addAlertContent(){
         //constraints for JFrame
         alert.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -464,10 +608,16 @@ public void resumeGame(){
         alert.add(quit);
     }
 
+    /**
+     * Exit game.
+     */
     public void exitGame(){
         System.exit(-1);
     }
 
+    /**
+     * Build panel.
+     */
     public void buildPanel(){
         this.requestFocus();
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));

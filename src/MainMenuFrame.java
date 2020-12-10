@@ -3,24 +3,44 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Random;
 
+/**
+ * The type Main menu frame.
+ */
 public class MainMenuFrame extends JFrame {
     private int playButtonValue = 0;
 
 
+
     Random random;
 
-    //variables for panel dimensions
+    /**
+     * The constant PANEL_WIDTH.
+     */
+
     static final int PANEL_WIDTH = 600;
+    /**
+     * The Panel height.
+     */
     static final int PANEL_HEIGHT = 600;
 
+    /**
+     * The Play button.
+     */
     JButton playButton = new JButton("Play");
 
-
+    /**
+     * Instantiates a new Main menu frame.
+     */
     MainMenuFrame(){
         makePlayButton();
         setContent();
     }
 
+    /**
+     * Play button action.
+     *
+     * @param e the event when clicked
+     */
     public void playButtonAction(ActionEvent e) {
         if(e.getSource() == playButton){
             this.dispose();
@@ -29,9 +49,10 @@ public class MainMenuFrame extends JFrame {
 
         }
     }
-    public int getPlayButtonValue(){
-        return playButtonValue;
-    }
+
+    /**
+     * Set content.
+     */
     public void setContent(){
 
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
@@ -45,6 +66,10 @@ public class MainMenuFrame extends JFrame {
         this.pack();
         this.setVisible(true);
     }
+
+    /**
+     * Make play button.
+     */
     public void makePlayButton(){
         playButton.setBounds(300,500,100,50);
         playButton.setVisible(true);
