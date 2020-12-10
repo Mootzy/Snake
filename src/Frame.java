@@ -6,14 +6,12 @@ public class Frame extends JFrame {
 Frame(){
     startGamePanel();
     addContent();
-
     }
      public void startGamePanel(){
         this.add(new GamePanel());
         this.requestFocus();
 
      }
-
 
     public void mainMenuGamePanel(){
         this.add(new MainMenuFrame());

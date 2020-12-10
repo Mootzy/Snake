@@ -43,6 +43,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     //Decides whether game is stopped or going.
     boolean running = false;
+    boolean paused = false;
 
     //used to generate apple randomly
     Random random;
@@ -78,7 +79,6 @@ public class GamePanel extends JPanel implements ActionListener {
     public void startGame(){
         newApple();
         running = true;
-
         //NEED TO USE JAVAX.SWING TIMER TO ACCESS START METHOD
         timer = new Timer(DELAY,this);
         timer.start();
@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements ActionListener {
      * @param g
      */
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //uncomment to display overlaying grid of panel
         //drawGrid(g);
@@ -121,24 +121,25 @@ public class GamePanel extends JPanel implements ActionListener {
      * Paints Snake
      * @param g
      */
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
 
-        //Apple color, coordinates and size.
-        g.setColor(Color.RED);
-        g.fillRect(appleXLocation, appleYLocation,UNIT_SIZE, UNIT_SIZE);
+        if (running) {
+            //Apple color, coordinates and size.
+            g.setColor(Color.RED);
+            g.fillRect(appleXLocation, appleYLocation, UNIT_SIZE, UNIT_SIZE);
 
-        //loop to keep track and add to snake array this maintains the head color/spawn/size
-        for (int i = 0; i< bodyParts; i++){
-            if (i==0){
-                g.setColor(Color.green);
-                g.fillRect(x[i],y[i],UNIT_SIZE,UNIT_SIZE);
-            }
+            //loop to keep track and add to snake array this maintains the head color/spawn/size
+            for (int i = 0; i < bodyParts; i++) {
+                if (i == 0) {
+                    g.setColor(Color.green);
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
 
-            //this maintains the body same conditions as head.
-            else{
-                g.setColor(new Color(45,180,0));
-                g.fillRect(x[i],y[i],UNIT_SIZE,UNIT_SIZE);
-
+                //this maintains the body same conditions as head.
+                else {
+                    g.setColor(new Color(45, 180, 0));
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
             }
         }
     }
@@ -190,6 +191,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + direction);
+        }
+        if (paused){
+
         }
     }
 
@@ -250,7 +254,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void gameOver(){
         timer.stop();
         createAlertDialog();
-
+        running = false;
     }
 
     public void createAlertDialog(){
@@ -287,7 +291,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-
     //SubClass used for global keyAdapter
     public class MyKeyAdapter extends KeyAdapter{
 
@@ -298,7 +301,7 @@ public class GamePanel extends JPanel implements ActionListener {
             //dont want user to be able to turn 180 degrees. Limit to 90 degree turns.
             switch (e.getKeyCode()){
 
-                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_LEFT  :
                     if (direction != 'R'){
                         direction = 'L';
                     }
@@ -324,7 +327,52 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                     break;
             }
+            //duplicate to allow player to used WASD as opposed to arrows
+            switch (e.getKeyChar()) {
+
+                case 'a':
+                    if (direction != 'R') {
+                        direction = 'L';
+                    }
+                    break;
+
+                case 'd':
+                    if (direction != 'L') {
+
+                        direction = 'R';
+                    }
+                    break;
+
+                case 'w':
+                    if (direction != 'D') {
+                        direction = 'U';
+                    }
+                    break;
+
+                case 's':
+                    if (direction != 'U') {
+                        direction = 'D';
+                    }
+                    break;
+                case ' ':
+                    paused = !paused;
+                    System.out.println(paused);
+                    System.out.println("paused");
+                    if (paused) {
+                        pauseGame();
+                    }
+                    if (!paused){
+                        resumeGame();
+                    }
+            }
         }
+    }
+public void resumeGame(){
+    paused = false;
+    timer.start();
+}
+    public void pauseGame(){
+    timer.stop();
     }
 
     @Override
@@ -351,6 +399,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         }
     }
+
     public void gameOverPaint(Graphics g) {
         //Score
         g.setColor(Color.red);
@@ -363,8 +412,6 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (PANEL_WIDTH - metrics2.stringWidth("Game Over"))/2, PANEL_HEIGHT/2);
     }
-
-
 
     public void buildAlertContent(){
         //Score tracker constraints
@@ -429,4 +476,5 @@ public class GamePanel extends JPanel implements ActionListener {
         this.addKeyListener(new MyKeyAdapter());
 
     }
+
 }

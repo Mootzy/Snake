@@ -1,21 +1,22 @@
 import java.io.PrintStream;
 
 public class Main {
-    static final int MAX_WIDTH = 550, MAX_HEIGHT = 500;
 
     public static void main(String[] args) {
         new MainMenuFrame();
-
     }
 }
 
-
-
 /*
+*******************CONTROLS**************
 
+* WASD or Arrow keys to move snake
+* SPACE to pause
+*
 - Tyler Wallace December 9th final project -
 
 Where to begin... I experienced a multitude of issues/problems with this program. most noteably-
+
 1- collision detection
 2- creating snake
 3- detecting how many game units were available on the JPanel
@@ -33,6 +34,4 @@ placing the buttons on the jPanel its self may provide a more aesthetically plea
 take more time.
 
 Thanks for the class.
-
-
  */
